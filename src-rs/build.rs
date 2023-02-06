@@ -250,6 +250,13 @@ impl SwiftLinker {
                 ))
                 .join(&profile);
 
+            panic!(
+                "{} {} {}",
+                search_path.display(),
+                search_path.exists(),
+                env::var("CARGO_CFG_TARGET_ARCH").unwrap()
+            );
+
             let mut folders = Vec::new();
             for entry in std::fs::read_dir(package_path.join(".build").join(format!(
                 "{}-apple-macosx",
