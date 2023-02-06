@@ -250,6 +250,12 @@ impl SwiftLinker {
                 ))
                 .join(&profile);
 
+            let mut folders = Vec::new();
+            for entry in std::fs::read_dir(package_path.join(".build")).unwrap() {
+                folders.push(entry.unwrap().path());
+            }
+            panic!("{:?}", folders);
+
             // TODO: fix
             // println!(
             //     "cargo:rerun-if-changed={}",
