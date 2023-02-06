@@ -251,10 +251,23 @@ impl SwiftLinker {
                 .join(&profile);
 
             let mut folders = Vec::new();
-            for entry in std::fs::read_dir(package_path.join(".build")).unwrap() {
+            for entry in std::fs::read_dir(package_path.join(".build").join(format!(
+                "{}-apple-macosx",
+                match env::var("CARGO_CFG_TARGET_ARCH").unwrap().as_str() {
+                    "aarch64" => "arm64",
+                    arch => arch,
+                }
+            )))
+            .unwrap()
+            {
                 folders.push(entry.unwrap().path());
             }
-            panic!("{:?}", folders);
+            panic!(
+                "{} {} {:?}",
+                search_path.display(),
+                search_path.exists(),
+                folders
+            );
 
             // TODO: fix
             // println!(
