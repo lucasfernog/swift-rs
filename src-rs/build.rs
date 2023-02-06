@@ -243,7 +243,7 @@ impl SwiftLinker {
                 // swift build uses this output folder no matter what is the target
                 .join(format!(
                     "{}-apple-macosx",
-                    match rust_target.arch.as_str() {
+                    match env::var("CARGO_CFG_TARGET_ARCH").unwrap().as_str() {
                         "aarch64" => "arm64",
                         arch => arch,
                     }
