@@ -243,38 +243,12 @@ impl SwiftLinker {
                 // swift build uses this output folder no matter what is the target
                 .join(format!(
                     "{}-apple-macosx",
-                    match env::var("CARGO_CFG_TARGET_ARCH").unwrap().as_str() {
+                    match std::env::consts::ARCH {
                         "aarch64" => "arm64",
                         arch => arch,
                     }
                 ))
                 .join(&profile);
-
-            panic!(
-                "{} {} {}",
-                search_path.display(),
-                search_path.exists(),
-                env::var("CARGO_CFG_TARGET_ARCH").unwrap()
-            );
-
-            let mut folders = Vec::new();
-            for entry in std::fs::read_dir(package_path.join(".build").join(format!(
-                "{}-apple-macosx",
-                match env::var("CARGO_CFG_TARGET_ARCH").unwrap().as_str() {
-                    "aarch64" => "arm64",
-                    arch => arch,
-                }
-            )))
-            .unwrap()
-            {
-                folders.push(entry.unwrap().path());
-            }
-            panic!(
-                "{} {} {:?}",
-                search_path.display(),
-                search_path.exists(),
-                folders
-            );
 
             // TODO: fix
             // println!(
